@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ChatModule } from './chat/chat.module';
+import { UserModule } from './user/user.module';
+import { StoryModule } from './story/story.module';
 
 @Module({
   imports: [
@@ -19,7 +21,9 @@ import { ChatModule } from './chat/chat.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
-    ChatModule
+    ChatModule,
+    UserModule,
+    StoryModule
   ],
 
 })
