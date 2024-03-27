@@ -23,7 +23,7 @@ import { StoryModule } from './story/story.module';
     }),
     ChatModule,
     UserModule,
-    StoryModule
+    StoryModule,
   ],
 
 })
