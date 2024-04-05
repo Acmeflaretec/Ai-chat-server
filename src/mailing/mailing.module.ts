@@ -26,7 +26,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
           from: `"DreamLoom App" <${config.get('SMTP_USERNAME')}>`,
         },
         template: {
-          dir: join(__dirname, 'templates'),
+          dir: join(__dirname, '../../templates'),
           adapter: new EjsAdapter(),
           options: {
             strict: false,
