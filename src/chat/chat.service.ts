@@ -76,7 +76,7 @@ export class ChatService {
 
   async getFeedback({ score, ans, story, qns }): Promise<string> {
     const prompt = `Give a constructive feedback about thinking, understanding etc to the parents of a five year old child who scored ${score} in the questionare regarding this story ${story}. 
-    This was the questions asked ${qns} and this was his answers ${ans}.`
+    This was the questions asked ${qns} and this was his answers ${ans}.Give response with feedback only.`
     return new Promise((resolve) => {
       this.openai.chat.completions.create({
         model: 'gpt-3.5-turbo',

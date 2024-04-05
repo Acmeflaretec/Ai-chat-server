@@ -6,6 +6,7 @@ import { Users } from 'src/user/user.entity';
 import { CreateFeedbackDto } from './dto/create-feedback.dto';
 import { Feedback } from './feedback.entity';
 import { ChatService } from 'src/chat/chat.service';
+import { MailingService } from 'src/mailing/mailing.service';
 
 @Injectable()
 export class StoryService {
@@ -16,7 +17,8 @@ export class StoryService {
       private usersRepository: Repository<Users>,
       @InjectRepository(Feedback)
       private feedbackRepository: Repository<Feedback>,
-      private chatService: ChatService
+      private chatService: ChatService,
+      private mailService: MailingService
    ) { }
 
 
@@ -28,6 +30,7 @@ export class StoryService {
       return found;
    }
    async getFeedbacks(): Promise<Feedback[]> {
+      // await this.feedbackRepository.delete('3')
       const found = await this.feedbackRepository.find();
       if (!found) {
          throw new NotFoundException('Item not found');
@@ -63,6 +66,9 @@ export class StoryService {
       const feedback = await this.chatService.getFeedback({ score, ans, story: story?.story, qns: story?.mcq })
       const newFeedback: Feedback = this.feedbackRepository.create({ userId, storyId, score, feedback });
       const createdFeedback = await this.feedbackRepository.save(newFeedback)
+      const user = await this.usersRepository.findOne({ where: { id: userId } })
+      const { username, email } = user
+      await this.mailService.sendMail({ username, email, feedback, score })
       return createdFeedback;
    }
 
