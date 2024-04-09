@@ -22,13 +22,27 @@ export class StoryService {
    ) { }
 
 
-   async getStory(): Promise<Story[]> {
-      const found = await this.storyRepository.find({ relations: ['author'] });
+   async getStory(filter): Promise<Story[]> {
+      const queryOptions: any = {
+         relations: ['author']
+      };
+      if (filter) {
+         const { author, description } = filter;
+         console.log(filter);
+
+         const whereCondition: Record<string, any> = {};
+         if (author) {
+            // whereCondition.author.id = author;
+         }
+         queryOptions.where = whereCondition;
+      }
+      const found = await this.storyRepository.find(queryOptions);
       if (!found) {
          throw new NotFoundException('Item not found');
       }
       return found;
    }
+
    async getFeedbacks(): Promise<Feedback[]> {
       // await this.feedbackRepository.delete('3')
       const found = await this.feedbackRepository.find();

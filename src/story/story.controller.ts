@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { StoryService } from './story.service';
 import { Story } from './story.entity';
 import { CreateFeedbackDto } from './dto/create-feedback.dto';
@@ -9,8 +9,8 @@ export class StoryController {
     constructor(private readonly storyService: StoryService) { }
 
     @Get()
-    async getStories(): Promise<Story[]> {
-        return await this.storyService.getStory();
+    async getStories(@Query() filter: Record<string, any>): Promise<Story[]> {
+        return await this.storyService.getStory(filter);
     }
     @Get('/feedback')
     async getFeedbacks(): Promise<Feedback[]> {

@@ -56,6 +56,18 @@ export class UserService {
       return { data, statusCode: 200, message: 'users fetched successfully' };
    }
 
+   async getUserById(id: string,populate:string): Promise<ResponseDto> {
+      const data = await this.usersRepository.findOne({ 
+         where: { id }, 
+         relations: [populate] 
+       });
+       
+      if (!data) {
+         throw new NotFoundException('user not found');
+      }
+      return { data, statusCode: 200, message: 'users fetched successfully' };
+   }
+
    async updateUser(id: string, authCredentialsDto: AuthCredentialsDto): Promise<ResponseDto> {
       const { name, nickname, gender, dob } = authCredentialsDto;
       const user = await this.usersRepository.findOne({

@@ -20,19 +20,17 @@ export class UserController {
   }
 
   @Get()
-  async getOneById(): Promise<ResponseDto> {
+  async getUsers(): Promise<ResponseDto> {
     return await this.authService.getUsers();
   }
+
+  @Get('/:populate/:id')
+  async getOneById(@Param('populate') populate: string, @Param('id') id: string): Promise<ResponseDto> {
+    return await this.authService.getUserById(id, populate);
+  }
+
   @Post('/update/:id')
   async updateUser(@Body() authCredentialsDto: AuthCredentialsDto, @Param('id') id: string): Promise<ResponseDto> {
     return await this.authService.updateUser(id, authCredentialsDto);
   }
-  // @Get('/author/:id')
-  // async getOneById(@Param('id') id: string): Promise<Story> {
-  //     return await this.storyService.getOneById(id);
-  // }
-  // @Get('/likes/:id')
-  // async getOneById(@Param('id') id: string): Promise<Story> {
-  //     return await this.storyService.getOneById(id);
-  // }
 }
