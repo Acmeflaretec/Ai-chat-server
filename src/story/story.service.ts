@@ -67,7 +67,7 @@ export class StoryService {
    }
 
    async CreateFeedback(data: CreateFeedbackDto): Promise<any> {
-      const { userId, storyId, score, ans } = data
+      const { userId, storyId, score, ans, image } = data
       console.log(data);
 
       const found = await this.feedbackRepository.findOne({ where: { userId, storyId } });
@@ -82,7 +82,7 @@ export class StoryService {
       const createdFeedback = await this.feedbackRepository.save(newFeedback)
       const user = await this.usersRepository.findOne({ where: { id: userId } })
       const { username, email } = user
-      await this.mailService.sendMail({ username, email, feedback, score })
+      await this.mailService.sendMail({ username, email, feedback, score, image })
       return createdFeedback;
    }
 

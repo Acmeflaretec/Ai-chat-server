@@ -17,5 +17,9 @@ export class SendMailDto {
     @IsNotEmpty()
     @IsString()
     readonly feedback: string;
+    
+    @IsNotEmpty()
+    @IsString()
+    readonly image: string;
 
 }

@@ -14,6 +14,10 @@ export class CreateFeedbackDto {
     readonly score: string;
 
     @IsNotEmpty()
+    @IsString()
+    readonly image: string;
+
+    @IsNotEmpty()
     readonly ans: string[];
 
 }

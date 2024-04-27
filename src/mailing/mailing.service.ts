@@ -9,7 +9,7 @@ export class MailingService {
   
   constructor(private mailerService: MailerService) { }
   async sendMail(data: SendMailDto) {
-    const { email, username, feedback, score } = data
+    const { email, username, feedback, score, image } = data
     this.mailerService.sendMail({
       to: email,
       subject: 'Participated in Quiz',
@@ -19,6 +19,11 @@ export class MailingService {
         score,
         feedback
       },
+      attachments: [{
+        filename: 'image.jpg',
+        content: image.split(';base64,').pop(),
+        encoding: 'base64',
+    }],
     })
       .then((success) => {
         console.log(success);
